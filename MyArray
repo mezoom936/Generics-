@@ -1,0 +1,309 @@
+/**
+ * @author mizo2
+ */
+package homework3;
+/**
+ * This class is designed to create my own list of generic data type
+ * It should work with any data type such as Strings, Integers, Doubles
+ * This class has one data field which is the generic array. It contains
+ * two constructors one with size parameter and another with the array
+ * parameter to initialize the data array object. It also contains a method 
+ * to get the element and another method to get the size. A method to put
+ * an element in a specific index, another to put an elements to replace the 
+ * current elements based on the start and the end of the indices. Method
+ * to print and another to get the values. Reverse, shuffle, leftShift,
+ * and rightShift. toString method and a sorting method. 
+ */
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class MyArray<E extends Comparable<E>>{
+	
+	//No other data fields necessary.
+	/**
+	 * generic array data field
+	 */
+    private E[] data;
+    // Constructor with the size parameter
+    /**
+     * to initialize the generic array 
+     * @param size
+     */
+    public MyArray(int size)
+    {
+        this.data = (E[])(new Comparable[size]);
+    }
+    //This constructor can accept an array or a comma-separated list of values.
+    /**
+     * Constructor to initialize the generic array with 
+     * the parameter array and deep copy the elements
+     * @param elements
+     */
+    public MyArray(E...elements)
+    {
+        this.data = (E[])(new Comparable[elements.length]);
+        //Make a deep copy to prevent shared references.
+        System.arraycopy(elements, 0, this.data, 0, elements.length);
+    }
+    // method to get the element by index
+    /**
+     * method to get the element by index
+     * @param index
+     * @return generic element by specific index
+     */
+    public E getIndex(int index)
+    {
+    	if(index < 0 || index > this.data.length)
+    	{
+    		throw new IndexOutOfBoundsException();
+    	}
+    	else
+    	{
+    		return this.data[index];
+    	}	
+    }
+    // returning the size of myArray
+    /**
+     * @return size of the array
+     */
+    public int getSize()
+    {
+    	return this.data.length;
+    }
+    // method to put a value in a specific index
+    /**
+     * method to put a value in a specific index
+     * @param index that will have the placed value
+     * @param value that will be placed
+     */
+    public void put(int index, E value)
+    {
+    	if(index < 0 || index > this.data.length - 1)
+    	{
+    		throw new IndexOutOfBoundsException("Index Out of Bounds");
+    	}
+    	else
+    	{
+    		this.data[index] = value;
+    	}
+    }
+    // returning a new MyArray object with values between indices start and end inclusive
+    /**
+     * method to get values within the range 
+     * @param start integer to start the range 
+     * @param end integer to end the range 
+     * @return an array with specific values
+     * that will start and end according to the parameters
+     */
+    public MyArray<E> getValues(int start, int end)
+    {
+    	int length = (end - start) + 1;
+    	MyArray<E> newArray = new MyArray<>((end-start)+1);
+    	int count = 0;
+    	for(int i = start; i < length; i++)
+    	{
+    		newArray.put(count, this.data[i]);
+    		count++;
+    	}
+		return newArray;
+    }
+    // method to print the list
+    /**
+     * method to print the list
+     * @param list to print
+     */
+    public void print(MyArray<?> list)
+    {
+    	for(int i = 0; i < list.getSize(); i++)
+    	{
+    		System.out.print(list.getIndex(i) + " ");
+    	}
+    	System.out.println();
+    }
+    // A method to put values and replace the current values between 
+    // the start index and the end index
+    /**
+     * A method to put values and replace the current values between 
+     * the start index and the end index
+     * @param start index integer to start retrieving the values
+     * @param end index integer to end retrieving the values
+     * @param elements generic array to pass for the method
+     * @throws Exception if we're adding many elements or fewer
+     */
+    public void put(int start, int end, E...elements) throws Exception
+    {
+    	if(start > end)
+    	{
+    		throw new IndexOutOfBoundsException("Index Out of Bounds");
+    	}
+    	else if(elements.length != ((end - start) + 1))
+    	{
+    		throw new Exception("Adding too many numbers or fewer than the length of the list");
+    	}
+    	else 
+    	{
+    		System.arraycopy(elements, start, this.data, start, elements.length);
+    	}	
+    }
+    // equals method to check the equality to another object 
+    /**
+     * equals method to test if two array objects are equal
+     * and have the same size
+     */
+    @Override
+    public boolean equals(Object o)
+    {
+    	MyArray<E> temp = (MyArray<E>) o;
+    	for(int i = 0; i < temp.data.length; i++)
+    	{
+    		if(this.data[i].equals(temp.data[i]) || this.data.length == temp.getSize())
+    		{
+    			return true;
+    		}
+    		else
+    		{
+    			return false;
+    		}
+    	}
+    	return false;
+    }
+    // method to find the maximum value
+    public E max()
+    {
+    	E max = this.data[0];
+    	for(int i = 0; i < this.data.length - 1; i++)
+    	{
+    		if(this.data[i + 1].compareTo(max) > 0)
+    		{
+    			max = this.data[i + 1];
+    		}
+    	}
+    	return max;
+    }
+    // method to find the minimum value
+    public E min()
+    {
+    	E min = this.data[0];
+    	for(int i = 0; i < this.data.length - 1; i++)
+    	{
+    		if(this.data[i + 1].compareTo(min) < 0)
+    		{
+    			min = this.data[i + 1];
+    		}
+    	}
+    	return min;
+    }
+    // method to reverse the list
+    public void reverse()
+    {
+    	for(int i = this.data.length - 1; i >= 0; i--)
+    	{
+    		System.out.print(this.data[i] + " ");
+    	}
+    	System.out.println();
+    }
+    // method to shuffle the list
+    public void shuffle()
+    {
+    	Random r = new Random();	
+    	E temp;
+    	for(int i = 0; i < this.data.length; i++)
+    	{
+    		int randomIndex = r.nextInt(this.data.length);
+    		temp = this.data[i];
+    		this.data[i] = this.data[randomIndex];
+    		this.data[randomIndex] = temp;
+    	}		
+    }
+    // a method to shift the list to the left
+    public void leftShift(int shiftDistance)
+    {
+    	int j;
+    	for(int i = 0; i < shiftDistance; i++)
+    	{
+    		E temp = this.data[0];
+    		for(j = 0; j < this.data.length - 1; j++)
+    		{
+    			this.data[j] = this.data[j + 1];
+    		}
+    		this.data[j] = temp;
+    	}	
+    }
+    // a method to shift the list to the right
+    public void rightShift(int shiftDistance)
+    {
+    	int j;
+    	for(int i = 0; i < shiftDistance; i++)
+    	{
+    		E temp = this.data[this.data.length - 1];
+    		for(j = this.data.length - 1; j > 0; j--)
+    		{
+    			this.data[j] = this.data[j - 1];
+    		}
+    		this.data[j] = temp;
+    	}
+    }
+    // toString method to represent the list
+    @Override
+    public String toString()
+    {
+    	String str = "";
+    	for(int i = 0; i < this.data.length; i++)
+    	{
+    		if(i == this.data.length - 1)
+    		{
+    			str += String.valueOf(this.data[i]);
+    		}
+    		else
+    		{
+    			str += String.valueOf(this.data[i] + ", ");
+    		}	
+    	}	
+    	return str;
+    }
+    // A method to sort the list
+    public void sorting()
+    {
+    	E temp;
+    	boolean isSorted = false;
+    	while (!isSorted)
+    	{
+    		isSorted = true;
+    		// for loop to keep iterating through the list 
+    		for(int i = 0; i < this.data.length - 1; i++)
+    		{
+    			if(this.data[i + 1].compareTo(this.data[i]) < 0)
+    			{	
+    				temp = this.data[i + 1];
+    				this.data[i + 1] = this.data[i];
+    				this.data[i] = temp;
+    				isSorted = false;
+    			}
+    		}
+    	}
+    }
+    // sorting method with recursion
+    public void sort(int size)
+	{	
+		E temp;
+		if(size == 1)
+		{
+			return;
+		}
+		else 
+		{
+			for(int i = 0; i < this.data.length - 1; i++)
+			{
+				if(this.data[i + 1].compareTo(this.data[i]) < 0)
+				{
+					temp = this.data[i + 1];
+					this.data[i + 1] = this.data[i];
+					this.data[i] = temp;
+				}
+			}			
+		}
+		sort(size - 1);
+	}
+}
+

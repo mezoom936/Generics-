@@ -1,0 +1,110 @@
+package homework3;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Main {
+
+	public static void main(String[] args) {
+		
+		// creating instances of the generic class
+		MyArray<Integer> arr = new MyArray<Integer>(5); // integer array
+		// testing out the first put method
+		// to put elements in certain index 
+		arr.put(0, 12);
+		arr.put(1, 34);
+		arr.put(2, 90);
+		arr.put(3, 2);
+		arr.put(4, 78);
+		// printing out the array
+		System.out.println("Printing out the Integer list: ");
+		System.out.println(arr);// testing out the toString method
+		// testing out the sorting method
+		arr.sort(arr.getSize());
+		System.out.println("Now sorting the list\n" + arr);
+		arr.rightShift(3); // testing out the right shift method 
+		System.out.println("Now shifting the elements 3 times to the right\n" + arr);
+		arr.leftShift(3); // testing out the left shift method
+		System.out.println("Now shifting the elements 3 times to the left\n" + arr);
+		arr.shuffle(); // testing out the shuffle method
+		System.out.println("Now let's shuffle the elements\n" + arr);
+		System.out.println("Reversing the elements");
+		// testing out the reverse method
+		arr.reverse();
+		// testing out finding the minimum value of the list
+		Integer min = arr.min();
+		System.out.println("Minimum element of the list: " + min);
+		// testing out finding the minimum value of the list
+		Integer max = arr.max();
+		System.out.println("Maximum element of the list: " + max);
+		// testing out the get at specific index method
+		Integer elementAtIndex_2 = arr.getIndex(2);
+		System.out.println("Element at index 2: " + elementAtIndex_2);
+		// testing out the equals method
+		MyArray<Integer> arrEqual = new MyArray<>(5);
+		arr.put(0, 12);
+		arr.put(1, 34);
+		arr.put(2, 90);
+		arr.put(3, 2);
+		arr.put(4, 25);
+		boolean equals = arr.equals(arrEqual);
+		System.out.println("Now testing the equals method: \n" + equals + ", meaning that the two objects are equal or have the same size");
+		// testing out the getValues method
+		System.out.println(arr);
+		MyArray<Integer> get_Values_0_2 = new MyArray<Integer>();
+		get_Values_0_2 = arr.getValues(0, 2);
+		System.out.println("Now testing to get values from 0 index to 2:\n" + get_Values_0_2);
+		int size = arr.getSize();
+		System.out.println("Now testing to get the size of the list: " + size);
+		// creating a string instance of the MyArray class
+		MyArray<String> arr2 = new MyArray<String>(5);
+		// testing out the first put method
+		// to put elements in certain index 
+		arr2.put(0, "Red");
+		arr2.put(1, "Orange");
+		arr2.put(2, "White");
+		arr2.put(3, "Blue");
+		arr2.put(4, "Purple");
+		// printing out the array
+		System.out.println("Printing out the Integer list: ");
+		System.out.println(arr2);// testing out the toString method
+		// testing out the sorting method
+		arr2.sorting();
+		System.out.println("Now sorting the list\n" + arr2);
+		arr2.rightShift(3); // testing out the right shift method 
+		System.out.println("Now shifting the elements 3 times to the right\n" + arr2);
+		arr2.leftShift(3); // testing out the left shift method
+		System.out.println("Now shifting the elements 3 times to the left\n" + arr2);
+		arr2.shuffle(); // testing out the shuffle method
+		System.out.println("Now let's shuffle the elements\n" + arr2);
+		System.out.println("Reversing the elements");
+		// testing out the reverse method
+		arr2.reverse();
+		// testing out finding the minimum value of the list
+		String minString = arr2.min();
+		System.out.println("Minimum element of the list: " + minString);
+		// testing out finding the minimum value of the list
+		String maxString = arr2.max();
+		System.out.println("Maximum element of the list: " + maxString);
+		// testing out the get at specific index method
+		String elementAtIndex_3 = arr2.getIndex(3);
+		System.out.println("Element at index 3: " + elementAtIndex_3);
+		// testing out the equals method
+		MyArray<String> arrEqualy = new MyArray<>(5);
+		arr2.put(0, "Red");
+		arr2.put(1, "Orange");
+		arr2.put(2, "White");
+		arr2.put(3, "Blue");
+		arr2.put(4, "Purple");
+		boolean equals2 = arr2.equals(arrEqualy);
+		System.out.println("Now testing the equals method: \n" + equals2 + ", meaning that the two objects are equal or have the same size");
+		// testing out the getValues method
+		System.out.println(arr);
+		MyArray<String> get_Values_0_3 = new MyArray<String>();
+		get_Values_0_3 = arr2.getValues(0, 3);
+		System.out.println("Now testing to get values from 0 index to 2:\n" + get_Values_0_3);
+		int sizeString = arr2.getSize();
+		System.out.println("Now testing to get the size of the list: " + sizeString);
+	}
+
+}
